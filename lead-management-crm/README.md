@@ -48,6 +48,29 @@ npm run dev
 - Backend API: http://localhost:8000
 - API Documentation: http://localhost:8000/docs
 
+---
+
+## Running Both Apps Together
+
+Since this is a monorepo with `multi-line-dialer`, here's the port allocation:
+
+| App | Frontend Port | Backend Port |
+|-----|--------------|--------------|
+| **lead-management-crm** | 5173 | 8000 |
+| **multi-line-dialer** | 5174 | 3001 |
+
+### Start CRM (Terminal 1 & 2)
+```bash
+# Terminal 1 - Backend
+cd lead-management-crm/backend
+source venv/bin/activate  # If using virtual environment
+uvicorn main:app --reload --port 8000
+
+# Terminal 2 - Frontend
+cd lead-management-crm/frontend
+npm run dev  # Runs on http://localhost:5173
+```
+
 ## Known Limitations
 
 **In-Memory Storage:** Leads are stored in a Python list in memory. On Vercel cold starts, user-added leads reset to seed data — this is a documented MVP tradeoff. 

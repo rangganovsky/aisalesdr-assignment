@@ -24,42 +24,63 @@ sales-automation-suite/  ← ONE GitHub repository (monorepo)
 
 ### Prerequisites
 - Node.js 18+ and npm
-- Python 3.11+ and pip
+- Python 3.11+ and pip3
 - Git
 
-### Run Locally
+### Port Allocation
 
+| Service | URL | Purpose |
+|---------|-----|---------|
+| **CRM Frontend** | http://localhost:5173 | Lead management UI |
+| **CRM Backend** | http://localhost:8000 | Lead API + docs at `/docs` |
+| **Dialer Frontend** | http://localhost:5174 | Multi-line dialer UI |
+| **Dialer Backend** | http://localhost:3001 | Dialer API |
+
+### Complete Local Setup (4 Terminals)
+
+**Terminal 1 — CRM Backend (Python/FastAPI):**
 ```bash
-# 1. Clone (one repo for both apps!)
 git clone https://github.com/rangganovsky/aisalesdr-assignment.git
-cd aisalesdr-assignment
+cd aisalesdr-assignment/lead-management-crm/backend
 
-# 2. Start CRM Backend (Terminal 1)
-cd lead-management-crm/backend
-pip install -r requirements.txt
+# Create virtual environment (recommended)
+python3 -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Install dependencies and run
+pip3 install -r requirements.txt
 uvicorn main:app --reload --port 8000
-
-# 3. Start CRM Frontend (Terminal 2)
-cd lead-management-crm/frontend
-npm install
-npm run dev
-
-# 4. Start Dialer Backend (Terminal 3)
-cd multi-line-dialer/backend
-npm install
-npm run dev
-
-# 5. Start Dialer Frontend (Terminal 4)
-cd multi-line-dialer/frontend
-npm install
-npm run dev
 ```
 
-**Access:**
-- CRM Frontend: http://localhost:5173
-- CRM Backend API: http://localhost:8000
-- Dialer Frontend: http://localhost:5174
-- Dialer Backend API: http://localhost:3001
+**Terminal 2 — CRM Frontend (React/Vite):**
+```bash
+cd aisalesdr-assignment/lead-management-crm/frontend
+npm install
+npm run dev  # http://localhost:5173
+```
+
+**Terminal 3 — Dialer Backend (Node.js/Express):**
+```bash
+cd aisalesdr-assignment/multi-line-dialer/backend
+npm install
+npm run dev  # http://localhost:3001
+```
+
+**Terminal 4 — Dialer Frontend (React/Vite):**
+```bash
+cd aisalesdr-assignment/multi-line-dialer/frontend
+npm install
+npm run dev  # http://localhost:5174
+```
+
+### Verify Everything Works
+```bash
+# Test CRM API
+curl http://localhost:8000/leads
+
+# Test Dialer API
+curl http://localhost:3001/leads
+```
 
 ---
 
@@ -191,10 +212,10 @@ npm install -g vercel && vercel login
 See [`docs/DEPLOYMENT_CLI.md`](docs/DEPLOYMENT_CLI.md)
 
 ### Deployed URLs
-- **CRM Frontend**: `https://crm-frontend-xxx.vercel.app`
-- **CRM Backend**: `https://crm-backend-xxx.vercel.app`
-- **Dialer Frontend**: `https://dialer-frontend-xxx.vercel.app`
-- **Dialer Backend**: `https://dialer-backend-xxx.vercel.app`
+- **CRM Frontend**: `https://crm-frontend-wine-five.vercel.app`
+- **CRM Backend**: `https://crm-backend-sepia-three.vercel.app`
+- **Dialer Frontend**: `https://dialer-frontend-blue.vercel.app`
+- **Dialer Backend**: `https://dialer-backend-dusky.vercel.app`
 
 ---
 

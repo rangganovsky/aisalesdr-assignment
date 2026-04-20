@@ -10,6 +10,7 @@ app = FastAPI(title="Lead Management API")
 origins = [
     "http://localhost:3000",
     "http://localhost:5173",
+    "https://crm-backend-sepia-three.vercel.app", 
     "*", # Allow all for simplicity in this MVP
 ]
 

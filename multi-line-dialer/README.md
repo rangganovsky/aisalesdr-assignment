@@ -14,19 +14,41 @@ cd aisalesdr-assignment/multi-line-dialer
 ```bash
 cd backend
 npm install
-npm run dev  # Runs on :3001
+npm run dev  # Runs on port 3001
 ```
 
 ### Frontend Setup
 ```bash
 cd frontend
 npm install
-npm run dev  # Runs on :5174
+npm run dev  # Runs on port 5174
 ```
 
 **Access:**
 - Frontend: http://localhost:5174
 - Backend API: http://localhost:3001
+
+---
+
+## Running Both Apps Together
+
+Since this is a monorepo with `lead-management-crm`, here's the port allocation:
+
+| App | Frontend Port | Backend Port |
+|-----|--------------|--------------|
+| **lead-management-crm** | 5173 | 8000 |
+| **multi-line-dialer** | 5174 | 3001 |
+
+### Start Dialer (Terminal 3 & 4)
+```bash
+# Terminal 3 - Backend
+cd multi-line-dialer/backend
+npm run dev  # Runs on http://localhost:3001
+
+# Terminal 4 - Frontend
+cd multi-line-dialer/frontend
+npm run dev  # Runs on http://localhost:5174
+```
 
 ## Live URLs
 - Backend: https://...railway.app
