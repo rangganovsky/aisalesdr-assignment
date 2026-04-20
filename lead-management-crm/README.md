@@ -13,21 +13,40 @@ A lead management MVP built for an AI Sales Doctor take-home assignment. Manage 
 - **Frontend:** React + TypeScript + Vite + Tailwind CSS
 - **Deployment:** Vercel (frontend + serverless backend)
 
-## Run Locally
+## Setup & Installation
 
-### Backend
+### Clone the Repository
+```bash
+git clone https://github.com/rangganovsky/aisalesdr-assignment.git
+cd aisalesdr-assignment/lead-management-crm
+```
+
+### Backend Setup
 ```bash
 cd backend
+
+# Create virtual environment (recommended)
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Run the server
 uvicorn main:app --reload --port 8000
 ```
 
-### Frontend
+### Frontend Setup
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+
+**Access:**
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000
+- API Documentation: http://localhost:8000/docs
 
 ## Known Limitations
 
@@ -57,8 +76,11 @@ npm run dev
 
 - `docs/PLAN.md` - Implementation plan and scope
 - `docs/engineering_thinking.md` - Architecture, scaling, and 90-day roadmap
-- `docs/DEPLOYMENT.md` - Deployment instructions
 - `docs/GAP_ANALYSIS.md` - Gap analysis vs plan
+- `docs/MOCK_DATA.md` - Mock data details
+- `../docs/DEPLOYMENT.md` - Deployment instructions (root docs)
+- `../docs/MONOREPO_GUIDE.md` - Monorepo guide (root docs)
+- `../docs/INTEGRATION_TESTING.md` - Integration testing (root docs)
 
 ## License
 

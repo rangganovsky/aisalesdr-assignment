@@ -2,17 +2,31 @@
 
 A 2-line concurrent call dialer with mock CRM sync.
 
-## Run locally
+## Setup & Installation
 
-### Backend
+### Clone the Repository
 ```bash
-cd backend && npm install && npm run dev  # :3001
+git clone https://github.com/rangganovsky/aisalesdr-assignment.git
+cd aisalesdr-assignment/multi-line-dialer
 ```
 
-### Frontend  
+### Backend Setup
 ```bash
-cd frontend && npm install && npm run dev  # :5173
+cd backend
+npm install
+npm run dev  # Runs on :3001
 ```
+
+### Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev  # Runs on :5174
+```
+
+**Access:**
+- Frontend: http://localhost:5174
+- Backend API: http://localhost:3001
 
 ## Live URLs
 - Backend: https://...railway.app

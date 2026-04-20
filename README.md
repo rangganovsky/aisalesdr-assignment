@@ -31,8 +31,8 @@ sales-automation-suite/  ← ONE GitHub repository (monorepo)
 
 ```bash
 # 1. Clone (one repo for both apps!)
-git clone https://github.com/YOUR_USERNAME/sales-automation-suite.git
-cd sales-automation-suite
+git clone https://github.com/rangganovsky/aisalesdr-assignment.git
+cd aisalesdr-assignment
 
 # 2. Start CRM Backend (Terminal 1)
 cd lead-management-crm/backend
@@ -97,8 +97,8 @@ Each Vercel project points to a different **Root Directory** in the same repo.
 ## 📚 Documentation
 
 ### Getting Started
-- [`docs/SETUP.md`](docs/SETUP.md) — Detailed local development setup
 - [`docs/MONOREPO_GUIDE.md`](docs/MONOREPO_GUIDE.md) — Why and how we use monorepo
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — Deployment instructions
 
 ### Deployment
 - [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — Web UI deployment guide
