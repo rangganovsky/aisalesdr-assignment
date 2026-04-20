@@ -8,8 +8,9 @@ const app = express();
 
 app.use(cors({
   origin: [
-    'http://localhost:5173',
-    'https://dialer-backend-dusky.vercel.app/',  
+    'http://localhost:5173',  // CRM frontend
+    'http://localhost:5174',  // Dialer frontend
+    'https://dialer-backend-dusky.vercel.app/',
     process.env.FRONTEND_URL || '',
   ].filter(Boolean),
 }));
