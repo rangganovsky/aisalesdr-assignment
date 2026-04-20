@@ -50,7 +50,7 @@ export interface SessionResponse {
   winnerCallId?: string;
   status: 'RUNNING' | 'STOPPED';
   metrics: { attempted: number; connected: number; failed: number; canceled: number };
-  calls: CallResult[];
+  calls?: CallResult[];
 }
 
 export const getLeads = () => api.get<Lead[]>('/leads').then((r) => r.data);

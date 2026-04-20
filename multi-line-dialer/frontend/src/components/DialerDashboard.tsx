@@ -64,14 +64,14 @@ export function DialerDashboard({ sessionId }: Props) {
   }, [sessionId, session]);
 
   const activeCalls = useMemo(() => {
-    if (!session) return [];
-    return session.calls.filter((c) => session.activeCallIds.includes(c.id));
+    if (!session || !session.calls) return [];
+    return session.calls.filter((c) => session.activeCallIds?.includes(c.id));
   }, [session]);
 
   const completedCalls = useMemo(() => {
-    if (!session) return [];
+    if (!session || !session.calls) return [];
     return session.calls
-      .filter((c) => !session.activeCallIds.includes(c.id))
+      .filter((c) => !session.activeCallIds?.includes(c.id))
       .sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime());
   }, [session]);
 
