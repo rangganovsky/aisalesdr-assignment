@@ -25,7 +25,9 @@ app.add_middleware(
 def _enrich_lead(lead: Lead) -> Lead:
     """Enrich a lead - normalize data and mark as enriched."""
     lead.is_enriched = True
-    lead.job_title = lead.job_title.title()
+    # title() lowercases uppercase acronyms (CEO → Ceo), so only apply to fully lowercase titles
+    if lead.job_title == lead.job_title.lower():
+        lead.job_title = lead.job_title.title()
     return lead
 
 @app.get("/")
