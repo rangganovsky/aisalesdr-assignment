@@ -10,7 +10,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173',  // CRM frontend
     'http://localhost:5174',  // Dialer frontend
-    'https://dialer-backend-dusky.vercel.app',
+    'https://dialer-frontend-blue.vercel.app',
     process.env.FRONTEND_URL || '',
   ].filter(Boolean),
 }));
