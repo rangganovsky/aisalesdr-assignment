@@ -104,3 +104,33 @@ def bulk_enrich_leads(request: BulkEnrichRequest):
         enriched=enriched_leads,
         not_found=not_found_ids
     )
+
+
+@app.post("/leads/by-phone/call-status")
+def update_call_status_by_phone(request: dict):
+    """
+    Update call_status for a lead by phone number.
+    Called by the dialer when a call completes.
+    """
+    phone_number = request.get("phone_number")
+    call_status = request.get("call_status")
+    
+    if not phone_number or not call_status:
+        raise HTTPException(status_code=422, detail="phone_number and call_status are required")
+    
+    # Find lead by phone number
+    for lead in leads_db:
+        if lead.phone_number == phone_number:
+            # Update the call_status
+            lead.call_status = call_status
+            print(f"[CRM] Updated lead {lead.id} ({lead.name}) call_status to {call_status}")
+            return {
+                "success": True,
+                "lead_id": lead.id,
+                "name": lead.name,
+                "phone_number": phone_number,
+                "call_status": call_status
+            }
+    
+    # Lead not found
+    raise HTTPException(status_code=404, detail=f"Lead with phone number {phone_number} not found")

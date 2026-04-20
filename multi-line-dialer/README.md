@@ -55,8 +55,33 @@ npm run dev  # Runs on http://localhost:5174
 - Frontend: https://...vercel.app
 
 ## How it works
-Select 1-8 leads → Create Session → Start → watch 2 lines dial simultaneously.
-When a call connects, the other line is canceled and CRM activity is written.
+
+1. Select 1-8 leads → Create Session → Start → watch 2 lines dial simultaneously
+2. When a call connects, the other line is canceled
+3. **Call outcomes sync to lead-management-crm in real-time** via API
+
+### Call Outcomes (Weighted Random)
+
+| Status | Weight | Description |
+|--------|--------|-------------|
+| CONNECTED | 30% | Winner call - other line canceled |
+| NO_ANSWER | 25% | No response |
+| BUSY | 25% | Line busy |
+| VOICEMAIL | 20% | Voicemail reached |
+
+### CRM Integration
+
+When calls complete, the dialer automatically syncs call status to the CRM:
+
+```
+Dialer Backend ──HTTP POST──▶ CRM Backend (/leads/by-phone/call-status)
+                                    │
+                                    ▼
+                            CRM Frontend shows updated call_status
+```
+
+**Environment Variable:**
+- `CRM_API_URL` - CRM backend URL (default: http://localhost:8000)
 
 ## API Reference
 
@@ -110,4 +135,7 @@ When a call connects, the other line is canceled and CRM activity is written.
 | Auth/JWT | Not in spec |
 | Unit/integration tests | Not required by assessment |
 | Session list screen | Not in spec (only 2 screens) |
-| Reconnect to Python CRM | Runtime coupling adds setup friction; standalone is cleaner for evaluator |
+
+## CRM Integration ✅ Implemented
+
+The dialer now syncs call outcomes to `lead-management-crm` in real-time. See [How it works](#how-it-works) above.

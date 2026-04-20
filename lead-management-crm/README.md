@@ -85,6 +85,23 @@ npm run dev  # Runs on http://localhost:5173
 | POST | `/leads` | Create a new lead |
 | POST | `/leads/{id}/enrich` | Enrich a single lead |
 | POST | `/leads/bulk-enrich` | Bulk enrich multiple leads |
+| POST | `/leads/by-phone/call-status` | Update call status by phone number (from dialer) |
+
+## Integration with Multi-Line Dialer
+
+The CRM receives real-time call status updates from the dialer:
+
+```
+multi-line-dialer (port 3001) ──▶ POST /leads/by-phone/call-status ──▶ CRM (port 8000)
+```
+
+**Call statuses:** CONNECTED, NO_ANSWER, BUSY, VOICEMAIL, CANCELED_BY_DIALER
+
+To see this in action:
+1. Open CRM frontend at http://localhost:5173
+2. Open Dialer frontend at http://localhost:5174
+3. Start a dialing session in the dialer
+4. Watch the `call_status` column update in the CRM as calls complete!
 
 ## Features
 
@@ -94,6 +111,7 @@ npm run dev  # Runs on http://localhost:5173
 - Bulk lead enrichment with checkbox selection
 - Real-time filtering
 - Inline error states (no alerts)
+- **`call_status` field** — shows call outcomes synced from multi-line-dialer
 
 ## Documentation
 

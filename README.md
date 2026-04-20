@@ -244,7 +244,29 @@ See [`docs/DEPLOYMENT_CLI.md`](docs/DEPLOYMENT_CLI.md)
 ### Integration
 - ✅ CRM provides leads with phone numbers
 - ✅ Dialer creates activities in mock CRM
+- ✅ **Dialer syncs call_status to CRM in real-time** — see call outcomes in both apps
 - ✅ Cross-app testing scenarios documented
+
+### How Call Sync Works
+
+When the dialer makes calls, call outcomes automatically sync to the CRM:
+
+```
+┌─────────────────────┐     Call Complete     ┌──────────────────────┐
+│  Dialer Backend     │ ─────────────────────▶│  CRM Backend         │
+│  (Port 3001)        │  POST /leads/by-phone/│  (Port 8000)         │
+│                     │       call-status     │                      │
+└─────────────────────┘                       └──────────────────────┘
+                                                        │
+                                                        ▼
+                                               ┌──────────────────────┐
+                                               │  CRM Frontend        │
+                                               │  (Port 5173)         │
+                                               │  Shows call_status   │
+                                               └──────────────────────┘
+```
+
+**Call Statuses:** CONNECTED, NO_ANSWER, BUSY, VOICEMAIL, CANCELED_BY_DIALER
 
 ---
 

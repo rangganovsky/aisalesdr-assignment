@@ -35,7 +35,7 @@ function simulateCall(call: CallRecord, session: DialerSession): void {
           call.endedAt = new Date();
           session.activeCallIds = session.activeCallIds.filter((id) => id !== call.id);
           session.metrics.canceled++;
-          crmSync.sync(call);
+          void crmSync.sync(call);
         }
         return;
       }
@@ -57,7 +57,7 @@ function simulateCall(call: CallRecord, session: DialerSession): void {
             other.endedAt = new Date();
             session.activeCallIds = session.activeCallIds.filter((id) => id !== otherId);
             session.metrics.canceled++;
-            crmSync.sync(other);
+            void crmSync.sync(other);
           }
         });
       } else {
@@ -65,7 +65,7 @@ function simulateCall(call: CallRecord, session: DialerSession): void {
       }
 
       session.activeCallIds = session.activeCallIds.filter((id) => id !== call.id);
-      crmSync.sync(call);
+      void crmSync.sync(call);
 
       console.log(`[call:${call.id}] ${call.status} for lead:${call.leadId}`);
       fillLines(session);
@@ -76,7 +76,7 @@ function simulateCall(call: CallRecord, session: DialerSession): void {
       call.endedAt = new Date();
       session.activeCallIds = session.activeCallIds.filter((id) => id !== call.id);
       session.metrics.failed++;
-      crmSync.sync(call);
+      void crmSync.sync(call);
       fillLines(session);
     }
   }, duration);

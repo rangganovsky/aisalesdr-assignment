@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 import {
   leadsStore,
@@ -9,6 +10,9 @@ import { CallRecord, CRMActivity, MockCRMContact } from './types';
 
 // Module-level idempotency guard. Safe for in-memory (same process lifetime).
 const syncedCallIds = new Set<string>();
+
+// CRM API configuration
+const CRM_API_URL = process.env.CRM_API_URL || 'http://localhost:8000';
 
 export const crmSync = {
   sync(call: CallRecord): void {
@@ -50,6 +54,26 @@ export const crmSync = {
     crmActivitiesStore.push(activity);
     mockCRMActivitiesStore.push(activity);
 
+    // 3. Sync to actual CRM backend (lead-management-crm)
+    crmSync.syncToCRMBackend(lead.phone, call.status);
+
     console.log(`[crm-sync] call:${call.id} disposition:${call.status} → activity created for lead:${call.leadId}`);
+  },
+
+  async syncToCRMBackend(phoneNumber: string, callStatus: string): Promise<void> {
+    try {
+      const response = await axios.post(`${CRM_API_URL}/leads/by-phone/call-status`, {
+        phone_number: phoneNumber,
+        call_status: callStatus,
+      });
+      console.log(`[crm-sync] Synced to CRM backend: ${response.data.name} → ${callStatus}`);
+    } catch (error: any) {
+      // Log but don't fail — the mock CRM sync still worked
+      if (error.response?.status === 404) {
+        console.log(`[crm-sync] Lead with phone ${phoneNumber} not found in CRM backend (OK - dialer has different lead set)`);
+      } else {
+        console.error(`[crm-sync] Failed to sync to CRM backend:`, error.message);
+      }
+    }
   },
 };
