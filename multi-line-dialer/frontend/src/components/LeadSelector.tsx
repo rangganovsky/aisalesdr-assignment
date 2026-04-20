@@ -10,12 +10,20 @@ export function LeadSelector({ onSessionCreated }: Props) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getLeads().then((data) => {
-      setLeads(data);
-      setLoading(false);
-    });
+    getLeads()
+      .then((data) => {
+        console.log('Leads loaded:', data.length);
+        setLeads(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Failed to load leads:', error);
+        setError(error.message || 'Failed to load leads. Is the backend running on port 3001?');
+        setLoading(false);
+      });
   }, []);
 
   const toggleLead = useCallback((id: string) => {
@@ -50,6 +58,28 @@ export function LeadSelector({ onSessionCreated }: Props) {
 
   if (loading) {
     return <div className="p-8 text-gray-500">Loading leads...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="p-8">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+          <h3 className="text-red-800 font-semibold mb-2">Error Loading Leads</h3>
+          <p className="text-red-600">{error}</p>
+          <p className="text-red-500 text-sm mt-2">
+            Make sure the backend is running: <code className="bg-red-100 px-1 rounded">cd multi-line-dialer/backend && npm run dev</code>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (leads.length === 0) {
+    return (
+      <div className="p-8 text-gray-500">
+        No leads available. Please check the backend data.
+      </div>
+    );
   }
 
   return (

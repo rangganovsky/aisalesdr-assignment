@@ -1,8 +1,24 @@
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+console.log('API Base URL:', apiUrl);
+
 const api = axios.create({
-  baseURL: (import.meta as any).env?.VITE_API_URL || 'http://localhost:3001',
+  baseURL: apiUrl,
 });
+
+// Add response interceptor for debugging
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('API Error:', error.message);
+    if (error.response) {
+      console.error('Response status:', error.response.status);
+      console.error('Response data:', error.response.data);
+    }
+    return Promise.reject(error);
+  }
+);
 
 export interface Lead {
   id: string;
