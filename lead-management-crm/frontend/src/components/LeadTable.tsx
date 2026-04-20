@@ -54,6 +54,12 @@ export const LeadTable = () => {
         fetchLeads();
     }, [fetchLeads]);
 
+    // Poll every 5s so call_status synced from the dialer appears without manual refresh
+    useEffect(() => {
+        const id = setInterval(fetchLeads, 5000);
+        return () => clearInterval(id);
+    }, [fetchLeads]);
+
     const handleEnrich = async (id: number) => {
         setEnriching(id);
         setError(null);
